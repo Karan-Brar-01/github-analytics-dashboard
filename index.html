@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A live, privacy-friendly engineering analytics dashboard for Karan-Brar-01's public GitHub work."
+    />
+    <meta name="theme-color" content="#09110f" />
+    <title>GitPulse — Karan Brar</title>
+    <link rel="preconnect" href="https://api.github.com" />
+    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Dashboard navigation">
+        <a class="brand" href="#overview" aria-label="GitPulse home">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span>
+            <strong>GitPulse</strong>
+            <small>Engineering intelligence</small>
+          </span>
+        </a>
+
+        <nav class="nav-list">
+          <a class="nav-link active" href="#overview">
+            <span class="nav-icon">⌁</span> Overview
+          </a>
+          <a class="nav-link" href="#activity">
+            <span class="nav-icon">↗</span> Activity
+          </a>
+          <a class="nav-link" href="#repositories">
+            <span class="nav-icon">◇</span> Repositories
+          </a>
+          <a class="nav-link" href="#signals">
+            <span class="nav-icon">✦</span> Signals
+          </a>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+
+        <div class="scope-card">
+          <div class="scope-status"><span></span> Public data only</div>
+          <p>No token, private repository, or personal commit content is stored.</p>
+          <a href="https://docs.github.com/en/rest" target="_blank" rel="noreferrer">GitHub REST API ↗</a>
+        </div>
+
+        <a class="profile-mini" href="https://github.com/Karan-Brar-01" target="_blank" rel="noreferrer">
+          <img id="sidebar-avatar" alt="Karan Brar" />
+          <span>
+            <strong>Karan Brar</strong>
+            <small>@Karan-Brar-01</small>
+          </span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" aria-label="Toggle menu">☰</button>
+          <div class="breadcrumb"><span>Workspace</span><b>/</b> Personal engineering</div>
+          <div class="topbar-actions">
+            <span class="updated" id="updated-label">Preparing live data…</span>
+            <button class="refresh-button" id="refresh-button" type="button">
+              <span class="refresh-icon" aria-hidden="true">↻</span>
+              Refresh
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="hero" id="overview">
+            <div>
+              <div class="eyebrow"><span></span> GitHub engineering report</div>
+              <h1>Build momentum,<br /><em>made visible.</em></h1>
+              <p id="hero-copy">A live view of repository activity, technology focus, and project momentum across Karan's public work.</p>
+            </div>
+            <div class="hero-profile">
+              <img id="hero-avatar" alt="Karan Brar's GitHub avatar" />
+              <div>
+                <span class="online-dot"></span>
+                <strong id="profile-name">Karan Brar</strong>
+                <a href="https://github.com/Karan-Brar-01" target="_blank" rel="noreferrer">@Karan-Brar-01 ↗</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="metric-grid" aria-label="Key metrics">
+            <article class="metric-card metric-primary">
+              <div class="metric-label">Public repositories <span title="Public, non-archived repositories">ⓘ</span></div>
+              <div class="metric-value" id="metric-repos">—</div>
+              <div class="metric-foot"><span class="metric-trend" id="metric-recent">— active recently</span><span>Portfolio</span></div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">Recent pushes <span title="Push events in GitHub's recent public activity window">ⓘ</span></div>
+              <div class="metric-value" id="metric-pushes">—</div>
+              <div class="metric-foot"><span class="metric-trend">Public event window</span><span>Delivery</span></div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">Primary stack <span title="Most frequent primary repository language">ⓘ</span></div>
+              <div class="metric-value metric-word" id="metric-language">—</div>
+              <div class="metric-foot"><span class="metric-trend" id="metric-language-share">— of repositories</span><span>Focus</span></div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">Momentum score <span title="Freshness, documentation, and community signals">ⓘ</span></div>
+              <div class="metric-value"><span id="metric-score">—</span><small>/100</small></div>
+              <div class="metric-foot"><span class="metric-trend" id="metric-score-label">Calculating</span><span>Health</span></div>
+            </article>
+          </section>
+
+          <section class="dashboard-grid" id="activity">
+            <article class="panel activity-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Delivery rhythm</span>
+                  <h2>Engineering activity</h2>
+                </div>
+                <div class="legend"><span></span> Public push events</div>
+              </div>
+              <div class="activity-summary">
+                <strong id="activity-total">—</strong>
+                <span>pushes observed</span>
+                <span class="activity-note" id="activity-note">Across the latest public activity window</span>
+              </div>
+              <div class="chart-wrap" id="activity-chart" aria-label="Weekly GitHub activity chart"></div>
+            </article>
+
+            <article class="panel language-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Portfolio composition</span>
+                  <h2>Technology mix</h2>
+                </div>
+              </div>
+              <div class="donut-layout">
+                <div class="donut" id="language-donut">
+                  <div class="donut-center"><strong id="language-count">—</strong><span>languages</span></div>
+                </div>
+                <div class="language-legend" id="language-legend"></div>
+              </div>
+              <p class="panel-caption">Based on each repository's primary detected language.</p>
+            </article>
+          </section>
+
+          <section class="panel repositories-panel" id="repositories">
+            <div class="panel-head repo-head">
+              <div>
+                <span class="panel-kicker">Portfolio detail</span>
+                <h2>Repository performance</h2>
+              </div>
+              <div class="repo-controls">
+                <label class="search-box">
+                  <span aria-hidden="true">⌕</span>
+                  <input id="repo-search" type="search" placeholder="Find a repository" aria-label="Find a repository" />
+                </label>
+                <select id="repo-sort" aria-label="Sort repositories">
+                  <option value="momentum">Highest momentum</option>
+                  <option value="recent">Recently updated</option>
+                  <option value="name">Repository name</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Repository</th>
+                    <th>Stack</th>
+                    <th>Last push</th>
+                    <th>Momentum</th>
+                    <th>Signal</th>
+                  </tr>
+                </thead>
+                <tbody id="repo-table-body">
+                  <tr><td colspan="5" class="loading-row"><span class="loader"></span> Reading public repositories…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              <span id="repo-count-label">Loading repositories…</span>
+              <button id="show-more" type="button">Show more</button>
+            </div>
+          </section>
+
+          <section class="lower-grid" id="signals">
+            <article class="panel signals-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Actionable intelligence</span>
+                  <h2>Portfolio signals</h2>
+                </div>
+                <span class="live-pill"><i></i> Live</span>
+              </div>
+              <div class="signals-list" id="signals-list"></div>
+            </article>
+
+            <article class="panel stream-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Latest public events</span>
+                  <h2>Activity stream</h2>
+                </div>
+                <a href="https://github.com/Karan-Brar-01?tab=overview" target="_blank" rel="noreferrer">View profile ↗</a>
+              </div>
+              <div class="event-list" id="event-list"></div>
+            </article>
+          </section>
+
+          <footer>
+            <span>GitPulse · Public engineering intelligence</span>
+            <span>Designed for <a href="https://github.com/Karan-Brar-01" target="_blank" rel="noreferrer">Karan-Brar-01</a> · Data from GitHub</span>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
